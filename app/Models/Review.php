@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-    
     protected $fillable = [
         'user_id',
         'event_id',
@@ -21,4 +20,16 @@ class Review extends Model
     {
         return $this->orderBy('updated_at', 'DESC')->limit($limit_count)->get();
     }
+    
+
+    public function user()
+    {
+        return $this->blongsTo(User::class);
+    }
+    
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
+
