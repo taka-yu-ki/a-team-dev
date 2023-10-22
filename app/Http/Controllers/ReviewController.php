@@ -30,7 +30,7 @@ class ReviewController extends Controller
     //レビュー作成画面を表示。
     public function review(Event $event)
     {
-        return view('events/review')->with(['event' => $event]);
+        return view('events/create')->with(['event' => $event]);
     }
     
     //レビューを保存。
