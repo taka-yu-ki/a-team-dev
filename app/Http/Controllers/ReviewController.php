@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\Like;
-use App\Models\iscrowded;
+use App\Models\Iscrowded;
 use App\Models\Event;
 
 
@@ -22,9 +22,43 @@ class ReviewController extends Controller
     }
     
     //イベント詳細画面を表示。
-    public function event(Event $event, Review $review)
+    public function event(Event $event, Review $review,Iscrowded $iscrowded)
     {
-        return view('events/show')->with(['event' => $event, "reviews" => $review->getByLimit()]);
+        $event = Event::find($event->id);
+        $reviews = $review->getByLimit();
+        $crowdedCounts = $iscrowded->where('event_id', $event->id)
+        ->selectRaw('evaluation, COUNT(*) as count')
+        ->groupBy('evaluation')
+        ->pluck('count', 'evaluation')
+        ->toArray();
+        return view('events/show')->with(['event' => $event, "reviews" => $review->getByLimit(),"crowdedCounts" => $crowdedCounts]);
+    }
+    
+    //混雑状況の投票を取得
+    public function evaluation(Request $request, $id)
+    {
+        $event = Event::find($id);
+        $iscrowded = new iscrowded();
+        $iscrowded->user_id = auth()->user()->id;
+        $iscrowded->event_id = $event->id;
+        $iscrowded->evaluation = $request->input('evaluation');
+        $iscrowded->save();
+        
+        switch ($iscrowded->evaluation) {
+        case 0:
+            $message = '「空いてる」に投票しました';
+            break;
+        case 1:
+            $message = '「普通」に投票しました';
+            break;
+        case 2:
+            $message = '「混んでる」に投票しました';
+            break;
+        }
+
+        session()->flash('message', $message);
+        
+        return redirect()->route('event',['event'=>$event->id]);
     }
     
     //レビュー作成画面を表示。
