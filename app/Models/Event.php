@@ -22,5 +22,10 @@ class Event extends Model
     public function iscrowdeds()
     {
         return $this->hasMany(Iscrowded::class);
+
+    public function getByLimit(int $limit_count = 10)
+    {
+        return $this->orderBy('name', 'DESC')->limit($limit_count)->get();
+
     }
 }
