@@ -18,19 +18,19 @@ class ReviewController extends Controller
     //ホーム画面（マッピング画面）を表示。
     public function mapping(Event $event)
     {
-        return view('posts/mapping')->with(['events' => $event->getByLimit()]);
+        return view('events/index')->with(['events' => $event->getByLimit()]);
     }
     
     //イベント詳細画面を表示。
     public function event(Event $event, Review $review)
     {
-        return view('posts/events')->with(['event' => $event, "reviews" => $review->getByLimit()]);
+        return view('events/show')->with(['event' => $event, "reviews" => $review->getByLimit()]);
     }
     
     //レビュー作成画面を表示。
     public function review(Event $event)
     {
-        return view('posts/review')->with(['event' => $event]);
+        return view('events/review')->with(['event' => $event]);
     }
     
     //レビューを保存。
