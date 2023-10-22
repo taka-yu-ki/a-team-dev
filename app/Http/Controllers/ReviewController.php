@@ -10,7 +10,6 @@ use App\Models\Review;
 use App\Models\Like;
 use App\Models\Iscrowded;
 use App\Models\Event;
-
 use Cloudinary;
 
 class ReviewController extends Controller

@@ -31,9 +31,17 @@
             <button type="submit" name="evaluation" value="1">普通</button>
             <button type="submit" name="evaluation" value="2">混んでる</button>
             @if(session('message'))
-                <p>{{ session('message') }}</p>
+                <p style="color:red;">{{ session('message') }}</p>
             @endif
-            
+            @foreach($crowdedCounts as $key => $value)
+                @if($key === 0)
+                <p>空いている：{{ $value }}件</p>
+                @elseif($key === 1)
+                <p>普通：{{ $value }}件</p>
+                @else
+                <p>混んでいる：{{ $value }}件</p>
+                @endif
+            @endforeach
             
             <div style='margin-bottom: 2rem;'>
                 <h2>みんなのイベントレビュー</h2>
