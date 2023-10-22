@@ -27,7 +27,7 @@
         <h1>あなたのレビューを投稿しよう！</h1>
 
         <p>イベント: {{ $event->name }}</p>
-        <form action="/events/{{ $event->id }}" method="POST">
+        <form action="/events/{{ $event->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="block">
@@ -47,7 +47,7 @@
             
             <div class="block">
                 <h2>画像</h2>
-                <input name="review[image]" placeholder="画像をつけられます">
+                <input type="file" name="image" placeholder="画像をつけられます">
                 <p class="body__error" style="color:red">{{ $errors->first('review.image') }}</p>
             </div>
             
