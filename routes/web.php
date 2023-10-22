@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
+//ReviewControllerの使用
+use App\Http\Controllers\ReviewController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +18,10 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', [PostController::class, 'index'])->name('index')->middleware('auth');
+// 認証機能
+// Route::get('/', [PostController::class, 'index'])->name('index')->middleware('auth');
+//認証機能
+Route::get('/', [ReviewController::class, 'mapping'])->name('index')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,3 +34,17 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+//ホーム画面(マッピング画面)を表示。
+Route::get('/events/index', [ReviewController::class, 'mapping']);
+
+//イベント詳細画面を表示。
+Route::get('/events/{event}', [ReviewController::class, 'event']);
+
+//レビュー作成画面を表示。
+Route::get('/events/{event}/review', [ReviewController::class, 'review']);
+
+//レビューを保存する。
+Route::post('/events/{event}', [ReviewController::class, 'store']);
