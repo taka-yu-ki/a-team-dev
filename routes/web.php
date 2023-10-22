@@ -29,9 +29,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // 仮にマッピングを表示するページを用意した
-Route::get('/events/index', function () {
-    return view('events/index');
-})->middleware(['auth', 'verified'])->name('events.index');
+// Route::get('/events/index', function () {
+//     return view('events/index');
+// })->middleware(['auth', 'verified'])->name('events.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,11 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/event', [EventController::class, 'index'])->name('event');
+// Route::get('/events', [EventController::class, 'index'])->name('event');
 
-Route::get('/event/{id}', [EventController::class,'show'])->name('event.show');
+// Route::get('/events/{id}', [EventController::class,'show'])->name('event.show');
 
-Route::post('/event/{id}/evaluate', [EventController::class,'evaluation'])->name('event.evaluate');
+Route::post('/events/{id}/evaluate', [EventController::class,'evaluation'])->name('event.evaluate');
 
 require __DIR__.'/auth.php';
 
