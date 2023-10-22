@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('iscrowded', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('user');
-            $table->bigInteger('evaluation');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('event_id')->constrained();
+            $table->integer('evaluation');
+            $table->string('image')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
 
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('iscrowded');
+        Schema::dropIfExists('reviews');
     }
 };

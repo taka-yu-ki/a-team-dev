@@ -9,4 +9,13 @@ class Review extends Model
 {
     use HasFactory;
     
+    public function user()
+    {
+        return $this->blongsTo(User::class);
+    }
+    
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('event_id');
-            $table->bigInteger('evaluation');
-            $table->string('image')->nullable();
-            $table->string('comment')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('event_id')->constrained();
             $table->timestamps();
-
+            $table->softDeletes('deleted_at');
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('likes');
     }
 };
