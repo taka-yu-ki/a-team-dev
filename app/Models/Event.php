@@ -1,32 +1,40 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\Iscrowded;
 
-class Event extends Model
-{
-    use HasFactory;
+
+// 仮のページに遷移する処理と混雑状況を受け取る関数が書いてある
+
+// class EventController extends Controller
+// {
+//     public function index(Event $event)
+//     {
+//         $event = Event::first();
+//         return view('events.index', ['events' => $event]);
+//     }
     
-    public function likes()
-    {
-        return $this->belongsToMany(Like::class);
-    }
+//     public function show($id)
+//     {
+//         $event = Event::find($id);
+//         return view('events.show', ['event' => $event]);
+//     }
     
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
-    
-    public function iscrowdeds()
-    {
-        return $this->hasMany(Iscrowded::class);
-    }
+//     public function evaluation(Request $request, $id)
+//     {
+//         $event = Event::find($id);
+//         $iscrowded = new Iscrowded();
+//         $iscrowded->user_id = auth()->user()->id;
+//         $iscrowded->event_id = $event->id;
+//         $iscrowded->evaluation = $request->input('evaluation');
+//         $iscrowded->save();
+        
+//         session()->flash('message', '投票しました');
+        
+//         return redirect()->route('event.show', ['event' => $event->id]);
+//     }
 
-    public function getByLimit(int $limit_count = 10)
-    {
-        return $this->orderBy('name', 'DESC')->limit($limit_count)->get();
-
-    }
-}
+// }
