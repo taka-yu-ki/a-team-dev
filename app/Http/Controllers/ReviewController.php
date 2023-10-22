@@ -11,8 +11,6 @@ use App\Models\Like;
 use App\Models\Iscrowded;
 use App\Models\Event;
 
-
-
 class ReviewController extends Controller
 {
     //ホーム画面（マッピング画面）を表示。

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Iscrowded;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -23,6 +24,11 @@ class EventController extends Controller
     public function evaluation(Request $request, $id)
     {
         $event = Event::find($id);
+        if($event->isFlg(Auth::user()))
+        {
+            $storedIscrowded = Iscrowded::where('user_id', Auth::id())->where('event_id', $event->id)->first();
+            $storedIscrowded->delete();
+        }
         $iscrowded = new Iscrowded();
         $iscrowded->user_id = auth()->user()->id;
         $iscrowded->event_id = $event->id;
@@ -31,7 +37,7 @@ class EventController extends Controller
         
         session()->flash('message', '投票しました');
         
-        return redirect()->route('event.show', ['id' => $event->id]);
+        return back();
     }
 
 }
