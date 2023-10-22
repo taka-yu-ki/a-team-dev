@@ -5,7 +5,22 @@
         <title>Blog</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        
+        <style type="text/css">
+            body {
+                margin: 1rem;
+            }
+            .review-btn {
+                background: orange;
+                margin-bottom: 1rem;
+                padding: .2rem 1rem;
+            }
+                .review-btn a {
+                    color: white;
+                }
+        </style>
     </head>
+    
     <body>
         <h1>event詳細ページ</h1>
         <h2>{{$event -> name}}</h2>
@@ -19,26 +34,33 @@
                 <p>{{ session('message') }}</p>
             @endif
             
-            <div>
-                <h2>仮レビューボタン</h2>
-                <p>投稿作成画面に遷移します</p>
-                <button><a href="/events/{{ $event->id }}/review">レビューする！</a></button>
-            </div>
             
-            <div>
-                <h2>レビューを表示する領域</h2>
+            <div style='margin-bottom: 2rem;'>
+                <h2>みんなのイベントレビュー</h2>
+                <div>
+                    <p style="margin:none;">あなたもレビューしてみよう！</p>
+                    <button class="review-btn"><a href="/events/{{ $event->id }}/review">レビューする！</a></button>
+                </div>
                 @foreach ($reviews as $review)
                     <div style='border:solid 1px;  margin-bottom: 0.5rem;  padding-left: 1rem; width: 20rem'>
                         <div>
-                            <p>{{ $review->evaluation }}</p>
-                            <p>{{ $review->comment }}</p>
-                            <p>{{ $review->image }}</p>
+                            <p>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $review->evaluation)
+                                        ⭐️
+                                    @else
+                                        ☆
+                                    @endif
+                                @endfor
+                            </p>
+                            <p style='overflow-wrap:break-word;'>{{ $review->comment }}</p>
+                            <p style='max-width:10rem;  max-height:10rem;'>{{ $review->image }}</p>
                         </div>
                     </div>
                 @endforeach
             </div>
             
-            <div><a href="/events/index">戻る</a></div>
+            <div><a href="/events/index">マップに戻る</a></div>
         </form>
     </body>
 </html>

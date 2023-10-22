@@ -5,20 +5,32 @@
         <title>Blog</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        
+        <style type="text/css">
+            body {
+                margin: 1rem;
+            }
+            .block {
+                margin-bottom: 3rem;
+            }
+            .review-btn {
+                background: orange;
+                margin-bottom: 1rem;
+                padding: .2rem 1rem;
+                color: white;
+                font-weight: bold;
+            }
+        </style>
     </head>
 
     <body>
-        <h1>レビュー作成画面</h1>
+        <h1>あなたのレビューを投稿しよう！</h1>
 
+        <p>イベント: {{ $event->name }}</p>
         <form action="/events/{{ $event->id }}" method="POST">
             @csrf
             
-            <div>
-                <p>user_id: 1（仮の値）</p>
-                <p>event_id: {{ $event->id }}（真の値）</p>
-            </div>
-            
-            <div>
+            <div class="block">
                 <h2>レビュー評価</h2>
                 <div><input type=radio name="review[evaluation]" value=1>⭐️️</input></div>
                 <div><input type=radio name="review[evaluation]" value=2>⭐️️⭐️</input></div>
@@ -27,22 +39,22 @@
                 <div><input type=radio name="review[evaluation]" value=5>⭐️⭐️⭐️⭐️⭐️️</input></div>
             </div>
             
-            <div>
+            <div class="block">
                 <h2>コメント</h2>
                 <textarea name="review[comment]" placeholder="ハロウィン楽しめた！">{{ old('review.comment') }}</textarea>
                 <p class="body__error" style="color:red">{{ $errors->first('review.comment') }}</p>
             </div>
             
-            <div>
+            <div class="block">
                 <h2>画像</h2>
                 <input name="review[image]" placeholder="画像をつけられます">
                 <p class="body__error" style="color:red">{{ $errors->first('review.image') }}</p>
             </div>
             
-            <input type="submit" value="レビューを投稿！"/>
+            <input class="review-btn" type="submit" value="レビューを投稿！"/>
         </form>
         
-        <div><a href="/events/{{ $event->id }}">戻る</a></div>
+        <div><a href="/events/{{ $event->id }}">イベントに戻る</a></div>
 
     </body>
 </html>
