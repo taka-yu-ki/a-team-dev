@@ -10,6 +10,7 @@ use App\Models\Review;
 use App\Models\Like;
 use App\Models\Iscrowded;
 use App\Models\Event;
+use Cloudinary;
 
 class ReviewController extends Controller
 {
@@ -72,10 +73,14 @@ class ReviewController extends Controller
         $user_id = Auth::id();
         $event_id = $event->id;
         
+        //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+
+        $input_review['image'] = $image_url;
+        
         $input_review['user_id'] = $user_id;
         $input_review['event_id'] = $event_id;
         
-
         $review->fill($input_review)->save();
         return redirect('/events/' . $event->id);
     }

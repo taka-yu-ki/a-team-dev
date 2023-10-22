@@ -24,7 +24,7 @@
     <body>
         <h1>event詳細ページ</h1>
         <h2>{{$event -> name}}</h2>
-        <form method="post" action="{{ route('event.evaluate', ['id' => $event->id]) }}">
+        <form method="post" action="{{ route('event.evaluate', ['id' => $event->id]) }}" enctype="multipart/form-data">
             <!--アプリ保護のためのやつ-->
             @csrf
             <button type="submit" name="evaluation" value="0">空いてる</button>
@@ -62,7 +62,7 @@
                                 @endfor
                             </p>
                             <p style='overflow-wrap:break-word;'>{{ $review->comment }}</p>
-                            <p style='max-width:10rem;  max-height:10rem;'>{{ $review->image }}</p>
+                            <img  src="{{ $review->image }}" alt="画像が読み込めません" style="width: 6rem;">
                         </div>
                     </div>
                 @endforeach

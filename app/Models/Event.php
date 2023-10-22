@@ -34,4 +34,5 @@ class Event extends Model
     {
         return Iscrowded::where('user_id', $user->id)->where('event_id', $this->id)->first() !== null;
     }
+
 }
